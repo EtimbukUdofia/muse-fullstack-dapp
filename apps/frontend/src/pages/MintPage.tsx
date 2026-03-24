@@ -1,51 +1,20 @@
 import { useState } from 'react'
-import { Sparkles, Image as ImageIcon } from 'lucide-react'
+import { MintStepper } from '@/components/MintStepper'
 import { ErrorHandler, AppError } from '@/utils/errorHandler'
 import { ErrorDisplay } from '@/components/ErrorDisplay'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
 
 export function MintPage() {
-  const [prompt, setPrompt] = useState('')
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   const [error, setError] = useState<AppError | null>(null)
 
-  const handleGenerate = async () => {
-    if (!prompt.trim()) return
-    
-    setError(null)
-    setIsGenerating(true)
-    try {
-      // AI image generation logic will be implemented
-      console.log('Generating image for prompt:', prompt)
-      setTimeout(() => {
-        setGeneratedImage(`https://picsum.photos/512/512?random=${Date.now()}`)
-        setIsGenerating(false)
-      }, 3000)
-    } catch (error) {
-      const appError = ErrorHandler.handle(error)
-      setError(appError)
-      setIsGenerating(false)
-    }
-  }
-
-  const handleMint = async () => {
-    if (!generatedImage) return
-    
-    setError(null)
-    try {
-      // NFT minting logic will be implemented
-      console.log('Minting NFT...')
-    } catch (error) {
-      const appError = ErrorHandler.handle(error)
-      setError(appError)
-    }
+  const handleMintComplete = (data: { metadata: any; fileData: any }) => {
+    console.log('Minting completed:', data)
+    // Handle successful minting - redirect or show success message
+    // For now, just log the data
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold text-secondary-900 mb-8">Create AI Art</h1>
-      
+    <div>
       {error && (
         <ErrorDisplay
           error={error}
@@ -54,6 +23,7 @@ export function MintPage() {
         />
       )}
       
+<<<<<<< HEAD
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-6">
           <div>
@@ -155,6 +125,9 @@ export function MintPage() {
           </div>
         </div>
       </div>
+=======
+      <MintStepper onComplete={handleMintComplete} />
+>>>>>>> 09eac3f19fc3b210e223a78629a972bab27995dd
     </div>
   )
 }

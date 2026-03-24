@@ -27,7 +27,7 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-secondary-200 bg-white/80 backdrop-blur-sm nav-mobile">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Navigation
+<Navigation
             items={navigationItems}
             brand={brand}
             actions={<WalletConnect />}
