@@ -20,8 +20,8 @@ export function ArtworkPage() {
   if (error || !metadata?.success) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-secondary-900 mb-2">Artwork Not Found</h1>
+        <div className="text-center px-4">
+          <h1 className="text-xl sm:text-2xl font-bold text-secondary-900 mb-2">Artwork Not Found</h1>
           <p className="text-secondary-600">Sorry, we couldn't find the artwork you're looking for.</p>
         </div>
       </div>
@@ -43,26 +43,28 @@ export function ArtworkPage() {
         twitterSite={artworkData.twitterSite}
         additionalTags={artworkData.additionalTags}
       />
-      
+
       <div className="min-h-screen bg-background">
         <div className="mobile-section">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
               {/* Artwork Image */}
-              <div className="aspect-square bg-gradient-to-br from-primary-100 to-primary-200 rounded-lg overflow-hidden">
+              <div className="w-full max-w-sm mx-auto sm:max-w-none aspect-square bg-gradient-to-br from-primary-100 to-primary-200 rounded-lg overflow-hidden">
                 <img
                   src={artworkData.image}
                   alt={artworkData.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    // Fallback to placeholder if image fails to load
                     const target = e.target as HTMLImageElement
                     target.style.display = 'none'
                     const placeholder = target.nextElementSibling as HTMLDivElement
                     if (placeholder) placeholder.style.display = 'flex'
                   }}
                 />
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200" style={{ display: 'none' }}>
+                <div
+                  className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200"
+                  style={{ display: 'none' }}
+                >
                   <div className="text-center">
                     <div className="text-4xl mb-2">🎨</div>
                     <p className="text-secondary-600">Artwork Image</p>
@@ -71,30 +73,30 @@ export function ArtworkPage() {
               </div>
 
               {/* Artwork Details */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
                   <h1 className="heading-mobile mb-2">{artworkData.title}</h1>
                   <p className="text-secondary-600 text-mobile-base">{artworkData.description}</p>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="bg-secondary-50 p-4 rounded-lg">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="bg-secondary-50 p-3 sm:p-4 rounded-lg">
                     <h3 className="font-semibold text-secondary-900 mb-2">Artwork Details</h3>
                     <dl className="space-y-2">
                       {Object.entries(artworkData.additionalTags).map(([key, value]) => (
-                        <div key={key} className="flex justify-between">
-                          <dt className="text-sm font-medium text-secondary-700 capitalize">
+                        <div key={key} className="flex justify-between gap-2">
+                          <dt className="text-sm font-medium text-secondary-700 capitalize shrink-0">
                             {key.replace('_', ' ')}:
                           </dt>
-                          <dd className="text-sm text-secondary-900">{value}</dd>
+                          <dd className="text-sm text-secondary-900 text-right break-all">{value}</dd>
                         </div>
                       ))}
                     </dl>
                   </div>
 
-                  <div className="bg-primary-50 p-4 rounded-lg">
+                  <div className="bg-primary-50 p-3 sm:p-4 rounded-lg">
                     <h3 className="font-semibold text-primary-900 mb-2">Share this artwork</h3>
-                    <div className="flex space-x-2">
+                    <div className="flex gap-2">
                       <button
                         onClick={() => {
                           if (navigator.share) {
@@ -104,18 +106,24 @@ export function ArtworkPage() {
                               url: artworkData.url,
                             })
                           } else {
-                            // Fallback: copy to clipboard
                             navigator.clipboard.writeText(artworkData.url)
                             alert('Link copied to clipboard!')
                           }
                         }}
-                        className="btn-primary text-mobile-sm px-4 py-2 touch-manipulation"
+                        className="btn-primary text-mobile-sm px-4 py-2 touch-manipulation flex-1 sm:flex-none"
                       >
                         Share
                       </button>
                       <button
-                        onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${artworkData.title} - ${artworkData.description}`)}&url=${encodeURIComponent(artworkData.url)}`, '_blank')}
-                        className="btn-outline text-mobile-sm px-4 py-2 touch-manipulation"
+                        onClick={() =>
+                          window.open(
+                            `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                              `${artworkData.title} - ${artworkData.description}`
+                            )}&url=${encodeURIComponent(artworkData.url)}`,
+                            '_blank'
+                          )
+                        }
+                        className="btn-outline text-mobile-sm px-4 py-2 touch-manipulation flex-1 sm:flex-none"
                       >
                         Tweet
                       </button>

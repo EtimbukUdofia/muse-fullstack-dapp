@@ -25,7 +25,7 @@ export function ExplorePage() {
     setFilters({})
     setSearchTerm('')
   }
-  
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
   }
@@ -33,35 +33,39 @@ export function ExplorePage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="mobile-section pb-2">
-        <h1 className="heading-mobile mb-6">Explore Artworks</h1>
-        
-        <div className="mobile-container mb-8">
-          <form onSubmit={handleSearch} className="flex gap-2 mb-4">
-            <div className="relative flex-1">
+        <h1 className="heading-mobile mb-4 sm:mb-6">Explore Artworks</h1>
+
+        <div className="mobile-container mb-6 sm:mb-8">
+          {/* Search row */}
+          <form onSubmit={handleSearch} className="flex gap-2 mb-3 sm:mb-4">
+            <div className="relative flex-1 min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-500" />
               <input
                 type="text"
                 placeholder="Search artworks, creators..."
-                className="input pl-10"
+                className="input pl-10 w-full"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <button type="submit" className="btn-primary px-4 hidden sm:block">
+            {/* Search button: visible on sm+ */}
+            <button type="submit" className="btn-primary px-4 hidden sm:block whitespace-nowrap shrink-0">
               Search
             </button>
-            <button type="button" className="btn-outline px-3 sm:hidden" aria-label="Filters">
+            {/* Filter icon: visible on mobile only */}
+            <button type="button" className="btn-outline px-3 sm:hidden shrink-0" aria-label="Filters">
               <Filter className="h-4 w-4" />
             </button>
           </form>
-          
+
+          {/* Category pills — horizontally scrollable on mobile */}
           <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 no-scrollbar">
             {['All', 'Trending', 'New', 'Photography', '3D Render'].map((category) => (
               <button
                 key={category}
                 onClick={() => setFilters(category === 'All' ? {} : { category })}
-                className={`btn-outline whitespace-nowrap px-4 py-1.5 rounded-full text-sm ${
-                  (filters.category === category || (!filters.category && category === 'All'))
+                className={`btn-outline whitespace-nowrap px-3 sm:px-4 py-1.5 rounded-full text-sm shrink-0 touch-manipulation ${
+                  filters.category === category || (!filters.category && category === 'All')
                     ? 'bg-secondary-900 text-white border-secondary-900'
                     : ''
                 }`}
