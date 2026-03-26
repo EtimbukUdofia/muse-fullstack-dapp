@@ -3,6 +3,8 @@ import { login, getChallenge } from '@/controllers/authController'
 import { validate } from '@/middleware/validate'
 import { loginSchema } from '@/schemas/authSchemas'
 
+import { authLimiter } from '@/middleware/rateLimitMiddleware'
+
 const router = Router()
 
 /**
@@ -10,13 +12,13 @@ const router = Router()
  * @desc    Get a challenge/nonce for signing
  * @access  Public
  */
-router.get('/challenge', getChallenge)
+router.get('/challenge', authLimiter, getChallenge)
 
 /**
  * @route   POST /api/auth/login
  * @desc    Verify signature and issue JWT
  * @access  Public
  */
-router.post('/login', validate(loginSchema), login)
+router.post('/login', authLimiter, validate(loginSchema), login)
 
 export default router
