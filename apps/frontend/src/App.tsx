@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="min-h-screen bg-secondary-50">
       <Navigation />
-      
+
       <main className="max-w-7xl mx-auto px-4 py-8">
         <Routes>
           <Route path="/" element={<SearchTest />} />
@@ -33,13 +33,13 @@ function App() {
 
       {/* Language Toggle for testing */}
       <div className="fixed bottom-4 right-4 bg-white/80 backdrop-blur-md p-2 rounded-lg border border-secondary-200 shadow-sm flex gap-2">
-        <button 
+        <button
           onClick={() => i18n.changeLanguage('en')}
           className={`px-3 py-1 rounded text-xs font-medium ${i18n.language === 'en' ? 'bg-primary-600 text-white' : 'text-secondary-600 hover:bg-secondary-100'}`}
         >
           EN
         </button>
-        <button 
+        <button
           onClick={() => i18n.changeLanguage('es')}
           className={`px-3 py-1 rounded text-xs font-medium ${i18n.language === 'es' ? 'bg-primary-600 text-white' : 'text-secondary-600 hover:bg-secondary-100'}`}
         >
